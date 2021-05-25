@@ -2,7 +2,7 @@ import { doUpdate } from "./doUpdate.js";
 function showUpdatePage() {
   $.ajax({
     type: "POST",
-    url: "http://localhost/mySQL/backend/DoOneSelectAction.php",
+    url: "http://localhost/mySQL/backend/DoSelect.php",
     data: {
       id: $("input[id=id]:checked").val(),
     },

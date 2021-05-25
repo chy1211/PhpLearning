@@ -1,12 +1,12 @@
 <?php
-    $id = $_POST['id'];$name=$_POST['name'];$addr=$_POST['addr'];$birth=$_POST['birth'];
-    $db_host = 'localhost';
-    $db_name = 'school';
-    $db_user = 'root';
-    $db_password = '1211';
-    $dsn="mysql:host=$db_host;dbname=$db_name;charset=utf8";
-    try {
-        $conn = new PDO($dsn,$db_user,$db_password);
+    $id = $_POST['id'];
+    $name=$_POST['name'];
+    $addr=$_POST['addr'];
+    $birth=$_POST['birth'];
+    require_once './mysql.inc.php';
+    $response = openDB();
+    if($response['status']==200){
+        $conn = $response['result'];
         $sql = "UPDATE`student`SET`name`=?,`birth`=?,`addr`=? WHERE id=?";
         $stmt = $conn->prepare($sql);
         $result=$stmt->execute(array($name,$birth,$addr,$id)); 
@@ -25,9 +25,6 @@
             $response['status']=400;
             $response['message']="SQL錯誤";
         }
-    } catch (PDOException $e) {
-        $response['status']=$e->getCode();
-        $response['message']=$e->getMessage();
     }
     echo json_encode($response);
 ?>
